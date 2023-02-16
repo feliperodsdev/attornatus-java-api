@@ -2,6 +2,7 @@ package com.api.apipeople.services;
 
 import com.api.apipeople.entities.Person;
 import com.api.apipeople.inMemoryDbPerson.PersonRepositoryinMemory;
+import com.api.apipeople.response.HttpResponse;
 import org.junit.Test;
 
 import java.time.LocalDate;
@@ -17,9 +18,9 @@ public class CreatePersonServiceTest {
         Person person = new Person(null, "Felipe", LocalDate.parse("2002-10-19"));
         //Create an Service to create an person
         CreatePersonService createPersonService = new CreatePersonService(new PersonRepositoryinMemory());
-        Person createdPerson = createPersonService.execute(person);
+        createPersonService.execute(person);
 
-        assertNotNull(createdPerson.getId());
+        assertNotNull(person.getId());
     }
 
 }
