@@ -3,7 +3,7 @@ package com.api.apipeople.controllers;
 import com.api.apipeople.dtos.CreatePersonDto;
 import com.api.apipeople.entities.Person;
 import com.api.apipeople.repositories.PersonRepository;
-import com.api.apipeople.response.HttpResponse;
+import com.api.apipeople.controllers.response.HttpResponse;
 import com.api.apipeople.services.CreatePersonService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
