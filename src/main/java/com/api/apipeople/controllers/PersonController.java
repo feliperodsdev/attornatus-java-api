@@ -5,6 +5,7 @@ import com.api.apipeople.entities.Person;
 import com.api.apipeople.repositories.PersonRepository;
 import com.api.apipeople.controllers.response.HttpResponse;
 import com.api.apipeople.services.CreatePersonService;
+import com.api.apipeople.services.GetPersonByIdService;
 import com.api.apipeople.services.ListPersonsService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,18 @@ public class PersonController {
             return response.ok(listPersons);
         }catch(Exception e){
             return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/persons/{id}")
+    public ResponseEntity<Object> getPerson(@PathVariable("id") Long id){
+        try{
+            HttpResponse response = new HttpResponse();
+            GetPersonByIdService getPersonByIdService = new GetPersonByIdService(repository);
+            Person person = getPersonByIdService.execute(id);
+            return response.ok(person);
+        }catch(Exception e){
+           return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
