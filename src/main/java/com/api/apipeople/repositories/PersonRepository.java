@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class PersonRepository implements IPersonRepository{
@@ -21,6 +22,12 @@ public class PersonRepository implements IPersonRepository{
     @Override
     public List<Person> listPersons(){
         return this.personJPARepository.findAll();
+    }
+
+    @Override
+    public Person getPersonById(Long id){
+        Optional<Person> person = this.personJPARepository.findById(id);
+        return person.get();
     }
 
 }

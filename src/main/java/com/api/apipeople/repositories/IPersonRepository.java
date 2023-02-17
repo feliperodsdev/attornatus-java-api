@@ -9,5 +9,6 @@ public interface IPersonRepository {
 
      public Person save(Person person);
      public List<Person> listPersons();
+     public Person getPersonById(Long id);
 
 }
