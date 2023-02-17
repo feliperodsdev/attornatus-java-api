@@ -5,16 +5,15 @@ import com.api.apipeople.entities.Person;
 import com.api.apipeople.repositories.PersonRepository;
 import com.api.apipeople.controllers.response.HttpResponse;
 import com.api.apipeople.services.CreatePersonService;
+import com.api.apipeople.services.ListPersonsService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Field;
+import java.util.List;
 
 @RestController
 @RequestMapping()
@@ -45,6 +44,18 @@ public class PersonController {
             BeanUtils.copyProperties(createPersonDto, person);
             createPersonService.execute(person);
             return response.created("Person Created");
+        }catch(Exception e){
+            return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/persons")
+    public ResponseEntity<Object> getPersons(){
+        try{
+            ListPersonsService listPersonsService = new ListPersonsService(repository);
+            HttpResponse response = new HttpResponse();
+            List<Person> listPersons = listPersonsService.listPersons();
+            return response.ok(listPersons);
         }catch(Exception e){
             return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }

@@ -15,4 +15,8 @@ public class HttpResponse {
         return new ResponseEntity<>(new ResponseObject(data, HttpStatus.CREATED),HttpStatus.CREATED);
     }
 
+    public <T> ResponseEntity<Object> ok(T data){
+        return new ResponseEntity<>(new ResponseObject(data, HttpStatus.OK),HttpStatus.OK);
+    }
+
 }
