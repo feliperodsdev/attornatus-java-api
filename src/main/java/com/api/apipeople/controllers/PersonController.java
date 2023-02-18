@@ -64,14 +64,10 @@ public class PersonController {
 
     @GetMapping("/persons/{id}")
     public ResponseEntity<Object> getPerson(@PathVariable("id") Long id){
-        try{
-            HttpResponse response = new HttpResponse();
-            GetPersonByIdService getPersonByIdService = new GetPersonByIdService(repository);
-            Person person = getPersonByIdService.execute(id);
-            return response.ok(person);
-        }catch(Exception e){
-           return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        HttpResponse response = new HttpResponse();
+        GetPersonByIdService getPersonByIdService = new GetPersonByIdService(repository);
+        Person person = getPersonByIdService.execute(id);
+        return response.ok(person);
     }
 
 }

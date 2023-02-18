@@ -2,7 +2,10 @@ package com.api.apipeople.services;
 
 import com.api.apipeople.entities.Person;
 import com.api.apipeople.repositories.IPersonRepository;
+import com.api.apipeople.services.exceptions.ResourceNotFound;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class GetPersonByIdService {
@@ -14,7 +17,8 @@ public class GetPersonByIdService {
     }
 
     public Person execute(Long id){
-        return this.personRepository.getPersonById(id);
+        Optional<Person> person = this.personRepository.getPersonById(id);
+        return person.orElseThrow(() -> new ResourceNotFound(id));
     }
 
 }

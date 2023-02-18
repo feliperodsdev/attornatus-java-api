@@ -25,9 +25,8 @@ public class PersonRepository implements IPersonRepository{
     }
 
     @Override
-    public Person getPersonById(Long id){
-        Optional<Person> person = this.personJPARepository.findById(id);
-        return person.get();
+    public Optional<Person> getPersonById(Long id){
+        return this.personJPARepository.findById(id);
     }
 
 }

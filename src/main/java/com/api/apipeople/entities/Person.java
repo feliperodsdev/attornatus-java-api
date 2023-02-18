@@ -55,5 +55,5 @@ public class Person implements Serializable {
     public List<Address> getAllAdress() {
         return allAdress;
     }
-    
+
 }
