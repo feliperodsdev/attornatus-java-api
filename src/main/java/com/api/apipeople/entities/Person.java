@@ -3,6 +3,7 @@ package com.api.apipeople.entities;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "tb_persons")
@@ -12,6 +13,9 @@ public class Person implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Address> allAdress;
 
     private String name;
     private LocalDate dateOfBirth;
@@ -47,4 +51,9 @@ public class Person implements Serializable {
     public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
+
+    public List<Address> getAllAdress() {
+        return allAdress;
+    }
+    
 }
