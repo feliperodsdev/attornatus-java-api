@@ -20,11 +20,12 @@ public class Address {
     public Address() {
     }
 
-    public Address(String streetAddress, String zipCode, String number, String city) {
+    public Address(Long id, String streetAddress, String zipCode, String number, String city) {
         this.streetAddress = streetAddress;
         this.zipCode = zipCode;
         this.number = number;
         this.city = city;
+        this.id = id;
     }
 
     public Long getId() {
