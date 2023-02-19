@@ -34,4 +34,8 @@ public class PersonRepositoryinMemory implements IPersonRepository {
         return Optional.empty();
     }
 
+    public Person getFirstPerson(){
+        return this.persons.get(0);
+    }
+
 }
