@@ -2,6 +2,7 @@ package com.api.apipeople.services;
 
 import com.api.apipeople.entities.Address;
 import com.api.apipeople.repositories.IAddressRepository;
+import com.api.apipeople.services.exceptions.EntitieValidationException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,6 +15,11 @@ public class CreateAnAddressService {
     }
 
     public Address execute(Address address){
+
+        if(!address.isValidZipCode()){
+            throw new EntitieValidationException("Zip code invalid!");
+        }
+
         return this.addressRepository.save(address);
     }
 

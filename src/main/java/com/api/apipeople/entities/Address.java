@@ -1,5 +1,7 @@
 package com.api.apipeople.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -68,6 +70,7 @@ public class Address {
         this.city = city;
     }
 
+    @JsonIgnore
     public Person getPerson() {
         return person;
     }
@@ -75,4 +78,9 @@ public class Address {
     public void setPerson(Person person) {
         this.person = person;
     }
+
+    public boolean isValidZipCode() {
+        return this.zipCode != null && this.zipCode.matches("^\\d{5}-\\d{3}$");
+    }
+
 }

@@ -21,12 +21,12 @@ public class CreateAnAddressServiceTest {
         Person person = new Person(null, "Felipe", LocalDate.parse("2002-10-19"));
         personRepositoryinMemory.save(person);
 
-        Address adress = new Address(null, "Rua Alvorada", "74473-811", "00", "Goiania");
-        adress.setPerson(person);
+        Address address = new Address(null, "Rua Alvorada", "74473-811", "00", "Goiania");
+        address.setPerson(person);
 
-        createAnAddressService.execute(adress);
+        createAnAddressService.execute(address);
 
-        assertNotNull(adress.getId());
+        assertNotNull(address.getId());
 
     }
 

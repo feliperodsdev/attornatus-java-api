@@ -26,7 +26,7 @@ public class PersonController {
     private PersonRepository repository;
 
     @PostMapping("/create-person")
-    public ResponseEntity<Object> createPerson(@RequestBody CreatePersonDto createPersonDto){
+    public ResponseEntity<Object> createPerson(@RequestBody CreatePersonDto createPersonDto) {
         HttpResponse response = new HttpResponse();
         try {
             String[] requiredFields = {"name", "dateOfBirth"};
@@ -40,6 +40,8 @@ public class PersonController {
                     }
                 } catch (NoSuchFieldException e) {
                     return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+                }catch (IllegalAccessException e) {
+                    return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
                 }
             }
             CreatePersonService createPersonService = new CreatePersonService(repository);
@@ -47,25 +49,25 @@ public class PersonController {
             BeanUtils.copyProperties(createPersonDto, person);
             createPersonService.execute(person);
             return response.created("Person Created");
-        }catch(Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping("/persons")
-    public ResponseEntity<Object> getPersons(){
-        try{
+    public ResponseEntity<Object> getPersons() {
+        try {
             ListPersonsService listPersonsService = new ListPersonsService(repository);
             HttpResponse response = new HttpResponse();
             List<Person> listPersons = listPersonsService.listPersons();
             return response.ok(listPersons);
-        }catch(Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping("/persons/{id}")
-    public ResponseEntity<Object> getPerson(@PathVariable("id") Long id){
+    public ResponseEntity<Object> getPerson(@PathVariable("id") Long id) {
         HttpResponse response = new HttpResponse();
         GetPersonByIdService getPersonByIdService = new GetPersonByIdService(repository);
         Person person = getPersonByIdService.execute(id);
@@ -73,11 +75,26 @@ public class PersonController {
     }
 
     @PutMapping("/persons/{id}")
-    public ResponseEntity<Object> updatePerson(@PathVariable("id") Long id, @RequestBody UpdatePersonDto update){
-        HttpResponse response = new HttpResponse();
-        UpdatePersonService updatePersonService = new UpdatePersonService(repository);
-        updatePersonService.execute(update, id);
-        return response.ok("Updated");
-    }
+    public ResponseEntity<Object> updatePerson(@PathVariable("id") Long id, @RequestBody UpdatePersonDto update) {
+                HttpResponse response = new HttpResponse();
 
+                String[] requiredFields = {"name", "dateOfBirth"};
+
+                for (String field : requiredFields) {
+                    try {
+                        Field declaredField = update.getClass().getDeclaredField(field);
+                        declaredField.setAccessible(true);
+                        if (declaredField.get(update) == null) {
+                            return response.badRequest("Missing Param: " + field);
+                        }
+                    } catch (NoSuchFieldException e) {
+                        return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+                    } catch (IllegalAccessException e) {
+                        return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+                    }
+                }
+                UpdatePersonService updatePersonService = new UpdatePersonService(repository);
+                updatePersonService.execute(update, id);
+                return response.ok("Updated");
+    }
 }
