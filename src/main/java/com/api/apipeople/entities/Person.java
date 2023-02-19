@@ -15,7 +15,7 @@ public class Person implements Serializable {
     private Long id;
 
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Address> allAdress;
+    private List<Address> allAddress;
 
     private String name;
     private LocalDate dateOfBirth;
@@ -52,8 +52,8 @@ public class Person implements Serializable {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public List<Address> getAllAdress() {
-        return allAdress;
+    public List<Address> getAllAddress() {
+        return allAddress;
     }
 
 }

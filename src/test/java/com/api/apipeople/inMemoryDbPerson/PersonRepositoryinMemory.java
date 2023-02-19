@@ -1,5 +1,6 @@
 package com.api.apipeople.inMemoryDbPerson;
 
+import com.api.apipeople.dtos.UserAddressDto;
 import com.api.apipeople.entities.Person;
 import com.api.apipeople.repositories.IPersonRepository;
 import com.api.apipeople.services.exceptions.ResourceNotFound;
@@ -32,6 +33,11 @@ public class PersonRepositoryinMemory implements IPersonRepository {
             }
         }
         return Optional.empty();
+    }
+
+    @Override
+    public List<UserAddressDto> getUserWithPrimaryAddress() {
+        return null;
     }
 
     public Person getFirstPerson(){

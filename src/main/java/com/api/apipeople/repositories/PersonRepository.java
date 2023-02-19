@@ -1,5 +1,6 @@
 package com.api.apipeople.repositories;
 
+import com.api.apipeople.dtos.UserAddressDto;
 import com.api.apipeople.entities.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -27,6 +28,11 @@ public class PersonRepository implements IPersonRepository{
     @Override
     public Optional<Person> getPersonById(Long id){
         return this.personJPARepository.findById(id);
+    }
+
+    @Override
+    public List<UserAddressDto> getUserWithPrimaryAddress() {
+        return this.personJPARepository.getUsersWithPrimaryAddress();
     }
 
 }

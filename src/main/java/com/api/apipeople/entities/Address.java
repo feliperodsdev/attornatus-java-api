@@ -15,6 +15,7 @@ public class Address {
     private String zipCode;
     private String number;
     private String city;
+    private Boolean isPrincipal;
 
     @ManyToOne
     private Person person;
@@ -83,4 +84,11 @@ public class Address {
         return this.zipCode != null && this.zipCode.matches("^\\d{5}-\\d{3}$");
     }
 
+    public Boolean getPrincipal() {
+        return isPrincipal;
+    }
+
+    public void setPrincipal(Boolean principal) {
+        isPrincipal = principal;
+    }
 }

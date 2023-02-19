@@ -49,6 +49,7 @@ public class AddressController {
             Address address = new Address();
             BeanUtils.copyProperties(createAddressDto, address);
             address.setPerson(getPersonByIdService.execute(person_id));
+            address.setPrincipal(false);
 
             createAnAddressService.execute(address);
 
