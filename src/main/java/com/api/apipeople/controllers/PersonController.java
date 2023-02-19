@@ -1,12 +1,14 @@
 package com.api.apipeople.controllers;
 
 import com.api.apipeople.dtos.CreatePersonDto;
+import com.api.apipeople.dtos.UpdatePersonDto;
 import com.api.apipeople.entities.Person;
 import com.api.apipeople.repositories.PersonRepository;
 import com.api.apipeople.controllers.response.HttpResponse;
 import com.api.apipeople.services.CreatePersonService;
 import com.api.apipeople.services.GetPersonByIdService;
 import com.api.apipeople.services.ListPersonsService;
+import com.api.apipeople.services.UpdatePersonService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -68,6 +70,14 @@ public class PersonController {
         GetPersonByIdService getPersonByIdService = new GetPersonByIdService(repository);
         Person person = getPersonByIdService.execute(id);
         return response.ok(person);
+    }
+
+    @PutMapping("/persons/{id}")
+    public ResponseEntity<Object> updatePerson(@PathVariable("id") Long id, @RequestBody UpdatePersonDto update){
+        HttpResponse response = new HttpResponse();
+        UpdatePersonService updatePersonService = new UpdatePersonService(repository);
+        updatePersonService.execute(update, id);
+        return response.ok("Updated");
     }
 
 }

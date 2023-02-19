@@ -1,5 +1,6 @@
 package com.api.apipeople.services;
 
+import com.api.apipeople.dtos.UpdatePersonDto;
 import com.api.apipeople.entities.Person;
 import com.api.apipeople.inMemoryDbPerson.PersonRepositoryinMemory;
 import com.api.apipeople.services.exceptions.ResourceNotFound;
@@ -27,8 +28,9 @@ public class UpdatePersonServiceTest {
         personRepositoryinMemory.save(p2);
 
         Person person = personRepositoryinMemory.getFirstPerson();
-        Person update = new Person(null, "Luciana", LocalDate.parse("2002-10-18"));
-
+        UpdatePersonDto update = new UpdatePersonDto();
+        update.setName("Luciana");
+        update.setDateOfBirth(LocalDate.parse("2003-01-14"));
         Person personUpdated = updatePersonService.execute(update, person.getId());
 
         assertEquals(personUpdated.getId(), person.getId());
@@ -51,7 +53,9 @@ public class UpdatePersonServiceTest {
         personRepositoryinMemory.save(p2);
 
         Person person = personRepositoryinMemory.getFirstPerson();
-        Person update = new Person(null, "Luciana", LocalDate.parse("2002-10-18"));
+        UpdatePersonDto update = new UpdatePersonDto();
+        update.setName("Luciana");
+        update.setDateOfBirth(LocalDate.parse("2003-01-14"));
 
         updatePersonService.execute(update, person.getId()+1);
 
