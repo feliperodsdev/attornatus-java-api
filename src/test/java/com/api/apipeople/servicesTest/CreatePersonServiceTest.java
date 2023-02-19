@@ -1,7 +1,8 @@
-package com.api.apipeople.services;
+package com.api.apipeople.servicesTest;
 
 import com.api.apipeople.entities.Person;
 import com.api.apipeople.inMemoryDbPerson.PersonRepositoryinMemory;
+import com.api.apipeople.services.CreatePersonService;
 import org.junit.Test;
 
 import java.time.LocalDate;

@@ -1,8 +1,9 @@
-package com.api.apipeople.services;
+package com.api.apipeople.servicesTest;
 
 import com.api.apipeople.dtos.UpdatePersonDto;
 import com.api.apipeople.entities.Person;
 import com.api.apipeople.inMemoryDbPerson.PersonRepositoryinMemory;
+import com.api.apipeople.services.UpdatePersonService;
 import com.api.apipeople.services.exceptions.ResourceNotFound;
 import org.junit.Rule;
 import org.junit.Test;

@@ -1,10 +1,10 @@
 package com.api.apipeople.inMemoryDbPerson;
 
 import com.api.apipeople.dtos.UserAddressDto;
+import com.api.apipeople.entities.Address;
 import com.api.apipeople.entities.Person;
 import com.api.apipeople.repositories.IPersonRepository;
-import com.api.apipeople.services.exceptions.ResourceNotFound;
-import net.bytebuddy.dynamic.DynamicType;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,9 +35,20 @@ public class PersonRepositoryinMemory implements IPersonRepository {
         return Optional.empty();
     }
 
-    @Override
     public List<UserAddressDto> getUserWithPrimaryAddress() {
-        return null;
+        List<UserAddressDto> list = new ArrayList<>();
+        List<Person> persons = this.listPersons();
+        for (int i = 0; i< persons.size(); ++i) {
+            if(persons.get(i) != null){
+                Address address;
+                if(persons.get(i).getAllAddress().get(i).getPrincipal()) address = persons.get(i).getAllAddress().get(i);
+                else address = null;
+                Long id = persons.get(i).getId();
+                String name = persons.get(i).getName();
+                list.add(new UserAddressDto(id, name, address));
+            }
+        }
+        return list;
     }
 
     public Person getFirstPerson(){
