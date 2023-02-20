@@ -3,6 +3,8 @@
 
 Esse foi um projeto bem legal de fazer, obrigado pela oportunidade! Irei fazer uma versão onde pra cada endereço adicionado, ou atualização de endereço principal, será enviado um email utilizando um microserviço e creio que será uma adição interessante ao projeto! 
 
+Postman: https://api.postman.com/collections/22925650-e80e2062-1c6c-4a18-adb6-4c78bd3f0bc7?access_key=PMAT-01GSPAWQPETGFFSHAZSSG7QBRP
+
 -> Rotas
 
     @PostMapping("/create-person") -> Cria uma pessoa
