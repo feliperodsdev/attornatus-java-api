@@ -15,9 +15,6 @@ import java.util.List;
 
 public class GetPersonByIdTest {
 
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
-
     @Test
     public void should_return_an_person() {
         PersonRepositoryinMemory personRepositoryinMemory = new PersonRepositoryinMemory();
@@ -30,7 +27,7 @@ public class GetPersonByIdTest {
         personRepositoryinMemory.save(p1);
         personRepositoryinMemory.save(p2);
 
-        List<Person> person = listPersonsService.listPersons();
+        List<Person> person = listPersonsService.execute();
 
         assertNotNull(getPersonByIdService.execute(person.get(0).getId()));
         assertNotNull(getPersonByIdService.execute(person.get(1).getId()));
@@ -40,9 +37,6 @@ public class GetPersonByIdTest {
 
     @Test
     public void should_throw_resource_exception() {
-
-        exception.expect(ResourceNotFound.class);
-
 
         PersonRepositoryinMemory personRepositoryinMemory = new PersonRepositoryinMemory();
         GetPersonByIdService getPersonByIdService = new GetPersonByIdService(personRepositoryinMemory);
@@ -54,9 +48,11 @@ public class GetPersonByIdTest {
         personRepositoryinMemory.save(p1);
         personRepositoryinMemory.save(p2);
 
-        List<Person> person = listPersonsService.listPersons();
+        List<Person> person = listPersonsService.execute();
 
-        getPersonByIdService.execute(person.get(0).getId() + person.get(1).getId());
+        assertThrows(ResourceNotFound.class, () -> {
+            getPersonByIdService.execute(person.get(0).getId() + person.get(1).getId());
+        });
 
     }
 

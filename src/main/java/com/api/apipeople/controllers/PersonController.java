@@ -1,8 +1,8 @@
 package com.api.apipeople.controllers;
 
 import com.api.apipeople.dtos.CreatePersonDto;
+import com.api.apipeople.dtos.PersonAddressDto;
 import com.api.apipeople.dtos.UpdatePersonDto;
-import com.api.apipeople.dtos.UserAddressDto;
 import com.api.apipeople.entities.Person;
 import com.api.apipeople.repositories.PersonRepository;
 import com.api.apipeople.controllers.response.HttpResponse;
@@ -57,7 +57,7 @@ public class PersonController {
         try {
             ListPersonWithPrimaryAddressService listPersonsWithPrimaryService = new ListPersonWithPrimaryAddressService(repository);
             HttpResponse response = new HttpResponse();
-            List<UserAddressDto> listPersons = listPersonsWithPrimaryService.execute();
+            List<PersonAddressDto> listPersons = listPersonsWithPrimaryService.execute();
             return response.ok(listPersons);
         } catch (Exception e) {
             return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -69,7 +69,7 @@ public class PersonController {
         try {
             ListPersonsService listPersonsService = new ListPersonsService(repository);
             HttpResponse response = new HttpResponse();
-            List<Person> listPersons = listPersonsService.listPersons();
+            List<Person> listPersons = listPersonsService.execute();
             return response.ok(listPersons);
         } catch (Exception e) {
             return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

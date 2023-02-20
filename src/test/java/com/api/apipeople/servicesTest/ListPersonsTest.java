@@ -22,7 +22,7 @@ public class ListPersonsTest {
         personRepositoryinMemory.save(p1);
         personRepositoryinMemory.save(p2);
 
-        List<Person> listPersons = listPersonsService.listPersons();
+        List<Person> listPersons = listPersonsService.execute();
 
         assertEquals("Felipe", listPersons.get(0).getName());
         assertEquals("Jordana", listPersons.get(1).getName());

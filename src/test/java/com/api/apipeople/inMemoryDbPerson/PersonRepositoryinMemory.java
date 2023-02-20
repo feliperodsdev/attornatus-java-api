@@ -1,6 +1,6 @@
 package com.api.apipeople.inMemoryDbPerson;
 
-import com.api.apipeople.dtos.UserAddressDto;
+import com.api.apipeople.dtos.PersonAddressDto;
 import com.api.apipeople.entities.Address;
 import com.api.apipeople.entities.Person;
 import com.api.apipeople.repositories.IPersonRepository;
@@ -35,8 +35,8 @@ public class PersonRepositoryinMemory implements IPersonRepository {
         return Optional.empty();
     }
 
-    public List<UserAddressDto> getUserWithPrimaryAddress() {
-        List<UserAddressDto> list = new ArrayList<>();
+    public List<PersonAddressDto> getUserWithPrimaryAddress() {
+        List<PersonAddressDto> list = new ArrayList<>();
         List<Person> persons = this.listPersons();
         for (int i = 0; i< persons.size(); ++i) {
             if(persons.get(i) != null){
@@ -45,7 +45,7 @@ public class PersonRepositoryinMemory implements IPersonRepository {
                 else address = null;
                 Long id = persons.get(i).getId();
                 String name = persons.get(i).getName();
-                list.add(new UserAddressDto(id, name, address));
+                list.add(new PersonAddressDto(id, name, address));
             }
         }
         return list;

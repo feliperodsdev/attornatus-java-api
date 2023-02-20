@@ -1,14 +1,13 @@
 package com.api.apipeople.dtos;
 
 import com.api.apipeople.entities.Address;
-import org.springframework.beans.BeanUtils;
 
-public class UserAddressDto {
+public class PersonAddressDto {
     private Long id;
     private String name;
     private AddressPersonDto primaryAddress;
 
-    public UserAddressDto(Long id, String name, Address primaryAddress) {
+    public PersonAddressDto(Long id, String name, Address primaryAddress) {
         this.id = id;
         this.name = name;
         this.setPrimaryAddress(primaryAddress);

@@ -11,7 +11,7 @@ public class ListPersonsService {
 
     public ListPersonsService(IPersonRepository personRepository){this.personRepository = personRepository;}
 
-    public List<Person> listPersons(){
+    public List<Person> execute(){
         return personRepository.listPersons();
     }
 }
