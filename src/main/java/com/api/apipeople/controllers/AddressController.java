@@ -6,6 +6,7 @@ import com.api.apipeople.entities.Address;
 import com.api.apipeople.repositories.AddressRepository;
 import com.api.apipeople.repositories.PersonRepository;
 import com.api.apipeople.services.CreateAnAddressService;
+import com.api.apipeople.services.CreatePersonService;
 import com.api.apipeople.services.GetPersonByIdService;
 import com.api.apipeople.services.UpdateAddressToPrincipal;
 import org.springframework.beans.BeanUtils;
@@ -21,16 +22,17 @@ import java.lang.reflect.Field;
 public class AddressController {
 
     @Autowired
-    AddressRepository addressRepository;
+    private GetPersonByIdService getPersonByIdService;
 
     @Autowired
-    private PersonRepository personRepository;
+    private CreateAnAddressService createAnAddressService;
+
+    @Autowired
+    private UpdateAddressToPrincipal updateAddressToPrincipal;
 
     @PutMapping("/{person_id}/{address_id}")
     public ResponseEntity<Object> markPrincipal(@PathVariable("person_id") Long idPerson, @PathVariable("address_id") Long idAddress){
         HttpResponse response = new HttpResponse();
-        GetPersonByIdService getPersonByIdService = new GetPersonByIdService(personRepository);
-        UpdateAddressToPrincipal updateAddressToPrincipal = new UpdateAddressToPrincipal(addressRepository, getPersonByIdService);
         updateAddressToPrincipal.execute(idPerson, idAddress);
         return response.ok("Updated");
     }
@@ -53,8 +55,6 @@ public class AddressController {
                     return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
                 }
             }
-            CreateAnAddressService createAnAddressService = new CreateAnAddressService(addressRepository);
-            GetPersonByIdService getPersonByIdService = new GetPersonByIdService(personRepository);
             Address address = new Address();
             BeanUtils.copyProperties(createAddressDto, address);
             address.setPerson(getPersonByIdService.execute(person_id));

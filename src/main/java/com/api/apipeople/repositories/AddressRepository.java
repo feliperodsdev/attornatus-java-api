@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-@Repository
+@Repository("AddressRepositoryPostgres")
 public class AddressRepository implements IAddressRepository {
 
     @Autowired

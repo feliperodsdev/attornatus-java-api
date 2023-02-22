@@ -5,6 +5,7 @@ import com.api.apipeople.entities.Person;
 import com.api.apipeople.repositories.IAddressRepository;
 import com.api.apipeople.services.exceptions.ResourceNotFound;
 import com.api.apipeople.services.exceptions.UnauthorizedError;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,7 +14,7 @@ public class UpdateAddressToPrincipal {
     private IAddressRepository addressRepository;
     private GetPersonByIdService getPersonByIdService;
 
-    public UpdateAddressToPrincipal(IAddressRepository addressRepository, GetPersonByIdService getPersonByIdService){
+    public UpdateAddressToPrincipal(@Qualifier("AddressRepositoryPostgres") IAddressRepository addressRepository, GetPersonByIdService getPersonByIdService){
         this.addressRepository = addressRepository;
         this.getPersonByIdService = getPersonByIdService;
     }

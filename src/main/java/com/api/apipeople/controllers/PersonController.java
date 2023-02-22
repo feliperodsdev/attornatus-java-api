@@ -21,7 +21,19 @@ import java.util.List;
 public class PersonController {
 
     @Autowired
-    private PersonRepository repository;
+    private CreatePersonService createPersonService;
+
+    @Autowired
+    private ListPersonsService listPersonsService;
+
+    @Autowired
+    private ListPersonWithPrimaryAddressService listPersonWithPrimaryAddressService;
+
+    @Autowired
+    private GetPersonByIdService getPersonByIdService;
+
+    @Autowired
+    private UpdatePersonService updatePersonService;
 
     @PostMapping("/create-person")
     public ResponseEntity<Object> createPerson(@RequestBody CreatePersonDto createPersonDto) {
@@ -42,7 +54,6 @@ public class PersonController {
                     return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
                 }
             }
-            CreatePersonService createPersonService = new CreatePersonService(repository);
             Person person = new Person();
             BeanUtils.copyProperties(createPersonDto, person);
             createPersonService.execute(person);
@@ -55,9 +66,8 @@ public class PersonController {
     @GetMapping("/persons-address")
     public ResponseEntity<Object> getPersonsWithPrimaryAddress() {
         try {
-            ListPersonWithPrimaryAddressService listPersonsWithPrimaryService = new ListPersonWithPrimaryAddressService(repository);
-            HttpResponse response = new HttpResponse();
-            List<PersonAddressDto> listPersons = listPersonsWithPrimaryService.execute();
+        HttpResponse response = new HttpResponse();
+            List<PersonAddressDto> listPersons = listPersonWithPrimaryAddressService.execute();
             return response.ok(listPersons);
         } catch (Exception e) {
             return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -67,7 +77,6 @@ public class PersonController {
     @GetMapping("/persons")
     public ResponseEntity<Object> getPersons() {
         try {
-            ListPersonsService listPersonsService = new ListPersonsService(repository);
             HttpResponse response = new HttpResponse();
             List<Person> listPersons = listPersonsService.execute();
             return response.ok(listPersons);
@@ -79,7 +88,6 @@ public class PersonController {
     @GetMapping("/persons/{id}")
     public ResponseEntity<Object> getPerson(@PathVariable("id") Long id) {
         HttpResponse response = new HttpResponse();
-        GetPersonByIdService getPersonByIdService = new GetPersonByIdService(repository);
         Person person = getPersonByIdService.execute(id);
         return response.ok(person);
     }
@@ -103,7 +111,6 @@ public class PersonController {
                         return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
                     }
                 }
-                UpdatePersonService updatePersonService = new UpdatePersonService(repository);
                 updatePersonService.execute(update, id);
                 return response.ok("Updated");
     }
